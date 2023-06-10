@@ -1,0 +1,1 @@
+dotnet run --project Labb_4_MVC_and_Razor --migrate-database
