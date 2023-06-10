@@ -1,9 +1,9 @@
-using Labb_4_MVC_and_Razor.Data;
+using LibraryWebApp.Data;
 using Serilog;
 using Serilog.Events;
 using Volo.Abp.Data;
 
-namespace Labb_4_MVC_and_Razor;
+namespace LibraryWebApp;
 
 public class Program
 {
@@ -45,7 +45,7 @@ public class Program
 
             if (IsMigrateDatabase(args))
             {
-                await app.Services.GetRequiredService<Labb_4_MVC_and_RazorDbMigrationService>().MigrateAsync();
+                await app.Services.GetRequiredService<LibraryDbMigrationService>().MigrateAsync();
                 return 0;
             }
 

@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
-    <RootNamespace>Labb_4_MVC_and_Razor</RootNamespace>
+    <RootNamespace>LibraryWebApp</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

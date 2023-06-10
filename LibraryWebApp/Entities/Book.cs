@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Domain.Entities;
 
-namespace Labb_4_MVC_and_Razor.Entities;
+namespace LibraryWebApp.Entities;
 
 public class Book : Entity<Guid>
 {

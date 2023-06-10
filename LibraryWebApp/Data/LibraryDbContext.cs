@@ -8,11 +8,11 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
-namespace Labb_4_MVC_and_Razor.Data;
+namespace LibraryWebApp.Data;
 
-public class Labb_4_MVC_and_RazorDbContext : AbpDbContext<Labb_4_MVC_and_RazorDbContext>
+public class LibraryDbContext : AbpDbContext<LibraryDbContext>
 {
-    public Labb_4_MVC_and_RazorDbContext(DbContextOptions<Labb_4_MVC_and_RazorDbContext> options)
+    public LibraryDbContext(DbContextOptions<LibraryDbContext> options)
         : base(options)
     {
     }

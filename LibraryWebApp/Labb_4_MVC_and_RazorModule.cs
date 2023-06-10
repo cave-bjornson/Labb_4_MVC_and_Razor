@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Extensions.DependencyInjection;
+﻿using LibraryWebApp.Data;
+using LibraryWebApp.Localization;
+using LibraryWebApp.Menus;
+using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
-using Labb_4_MVC_and_Razor.Data;
-using Labb_4_MVC_and_Razor.Localization;
-using Labb_4_MVC_and_Razor.Menus;
 using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
-using Volo.Abp.Uow;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Mvc;
@@ -46,10 +45,11 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
+using Volo.Abp.Uow;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
-namespace Labb_4_MVC_and_Razor;
+namespace LibraryWebApp;
 
 [DependsOn(
     // ABP Framework packages
@@ -111,7 +111,7 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
         context.Services.PreConfigure<AbpMvcDataAnnotationsLocalizationOptions>(options =>
         {
             options.AddAssemblyResource(
-                typeof(Labb_4_MVC_and_RazorResource)
+                typeof(LibraryWebAppResource)
             );
         });
 
@@ -190,11 +190,11 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
-                .Add<Labb_4_MVC_and_RazorResource>("en")
+                .Add<LibraryWebAppResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/LibraryWebApp");
 
-            options.DefaultResourceType = typeof(Labb_4_MVC_and_RazorResource);
+            options.DefaultResourceType = typeof(LibraryWebAppResource);
 
             options.Languages.Add(new LanguageInfo("en", "en", "English"));
             options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
@@ -220,7 +220,7 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
 
         Configure<AbpExceptionLocalizationOptions>(options =>
         {
-            options.MapCodeNamespace("LibraryWebApp", typeof(Labb_4_MVC_and_RazorResource));
+            options.MapCodeNamespace("LibraryWebApp", typeof(LibraryWebAppResource));
         });
     }
 
@@ -241,7 +241,7 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
     {
         Configure<AbpNavigationOptions>(options =>
         {
-            options.MenuContributors.Add(new Labb_4_MVC_and_RazorMenuContributor());
+            options.MenuContributors.Add(new LibraryMenuContributor());
         });
     }
 
@@ -280,7 +280,7 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
 
     private void ConfigureEfCore(ServiceConfigurationContext context)
     {
-        context.Services.AddAbpDbContext<Labb_4_MVC_and_RazorDbContext>(options =>
+        context.Services.AddAbpDbContext<LibraryDbContext>(options =>
         {
             /* You can remove "includeAllEntities: true" to create
              * default repositories only for aggregate roots

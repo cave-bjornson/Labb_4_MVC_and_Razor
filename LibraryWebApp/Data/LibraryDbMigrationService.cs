@@ -7,20 +7,20 @@ using Volo.Abp.Identity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.TenantManagement;
 
-namespace Labb_4_MVC_and_Razor.Data;
+namespace LibraryWebApp.Data;
 
-public class Labb_4_MVC_and_RazorDbMigrationService : ITransientDependency
+public class LibraryDbMigrationService : ITransientDependency
 {
-    public ILogger<Labb_4_MVC_and_RazorDbMigrationService> Logger { get; set; }
+    public ILogger<LibraryDbMigrationService> Logger { get; set; }
 
     private readonly IDataSeeder _dataSeeder;
-    private readonly Labb_4_MVC_and_RazorEFCoreDbSchemaMigrator _dbSchemaMigrator;
+    private readonly LibraryEFCoreDbSchemaMigrator _dbSchemaMigrator;
     private readonly ITenantRepository _tenantRepository;
     private readonly ICurrentTenant _currentTenant;
 
-    public Labb_4_MVC_and_RazorDbMigrationService(
+    public LibraryDbMigrationService(
         IDataSeeder dataSeeder,
-        Labb_4_MVC_and_RazorEFCoreDbSchemaMigrator dbSchemaMigrator,
+        LibraryEFCoreDbSchemaMigrator dbSchemaMigrator,
         ITenantRepository tenantRepository,
         ICurrentTenant currentTenant)
     {
@@ -29,7 +29,7 @@ public class Labb_4_MVC_and_RazorDbMigrationService : ITransientDependency
         _tenantRepository = tenantRepository;
         _currentTenant = currentTenant;
 
-        Logger = NullLogger<Labb_4_MVC_and_RazorDbMigrationService>.Instance;
+        Logger = NullLogger<LibraryDbMigrationService>.Instance;
     }
 
     public async Task MigrateAsync()

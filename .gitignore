@@ -252,8 +252,8 @@ paket-files/
 *.sln.iml
 
 
-# Labb_4_MVC_and_Razor
-Labb_4_MVC_and_Razor/Logs/*
+# LibraryWebApp
+LibraryWebApp/Logs/*
 
 *.db
 *.db-shm
