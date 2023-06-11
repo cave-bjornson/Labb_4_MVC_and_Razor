@@ -101,7 +101,7 @@ namespace LibraryWebApp;
     typeof(AbpSettingManagementHttpApiModule),
     typeof(AbpSettingManagementWebModule)
 )]
-public class Labb_4_MVC_and_RazorModule : AbpModule
+public class LibraryWebAppModule : AbpModule
 {
     /* Single point to enable/disable multi-tenancy */
     public const bool IsMultiTenant = true;
@@ -228,11 +228,11 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
     {
         Configure<AbpVirtualFileSystemOptions>(options =>
         {
-            options.FileSets.AddEmbedded<Labb_4_MVC_and_RazorModule>();
+            options.FileSets.AddEmbedded<LibraryWebAppModule>();
             if (hostingEnvironment.IsDevelopment())
             {
                 /* Using physical files in development, so we don't need to recompile on changes */
-                options.FileSets.ReplaceEmbeddedByPhysical<Labb_4_MVC_and_RazorModule>(hostingEnvironment.ContentRootPath);
+                options.FileSets.ReplaceEmbeddedByPhysical<LibraryWebAppModule>(hostingEnvironment.ContentRootPath);
             }
         });
     }
@@ -241,7 +241,7 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
     {
         Configure<AbpNavigationOptions>(options =>
         {
-            options.MenuContributors.Add(new LibraryMenuContributor());
+            options.MenuContributors.Add(new LibraryWebAppMenuContributor());
         });
     }
 
@@ -249,7 +249,7 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
     {
         Configure<AbpAspNetCoreMvcOptions>(options =>
         {
-            options.ConventionalControllers.Create(typeof(Labb_4_MVC_and_RazorModule).Assembly);
+            options.ConventionalControllers.Create(typeof(LibraryWebAppModule).Assembly);
         });
     }
 
@@ -267,20 +267,20 @@ public class Labb_4_MVC_and_RazorModule : AbpModule
 
     private void ConfigureAutoMapper(ServiceConfigurationContext context)
     {
-        context.Services.AddAutoMapperObjectMapper<Labb_4_MVC_and_RazorModule>();
+        context.Services.AddAutoMapperObjectMapper<LibraryWebAppModule>();
         Configure<AbpAutoMapperOptions>(options =>
         {
             /* Uncomment `validate: true` if you want to enable the Configuration Validation feature.
              * See AutoMapper's documentation to learn what it is:
              * https://docs.automapper.org/en/stable/Configuration-validation.html
              */
-            options.AddMaps<Labb_4_MVC_and_RazorModule>(/* validate: true */);
+            options.AddMaps<LibraryWebAppModule>(/* validate: true */);
         });
     }
 
     private void ConfigureEfCore(ServiceConfigurationContext context)
     {
-        context.Services.AddAbpDbContext<LibraryDbContext>(options =>
+        context.Services.AddAbpDbContext<LibraryWebAppDbContext>(options =>
         {
             /* You can remove "includeAllEntities: true" to create
              * default repositories only for aggregate roots

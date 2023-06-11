@@ -39,13 +39,13 @@ public class Program
             {
                 builder.Services.AddDataMigrationEnvironment();
             }
-            await builder.AddApplicationAsync<Labb_4_MVC_and_RazorModule>();
+            await builder.AddApplicationAsync<LibraryWebAppModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();
 
             if (IsMigrateDatabase(args))
             {
-                await app.Services.GetRequiredService<LibraryDbMigrationService>().MigrateAsync();
+                await app.Services.GetRequiredService<LibraryWebAppDbMigrationService>().MigrateAsync();
                 return 0;
             }
 

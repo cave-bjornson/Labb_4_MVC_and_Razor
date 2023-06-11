@@ -3,11 +3,11 @@ using Volo.Abp.DependencyInjection;
 
 namespace LibraryWebApp.Data;
 
-public class LibraryEFCoreDbSchemaMigrator : ITransientDependency
+public class LibraryWebAppEFCoreDbSchemaMigrator : ITransientDependency
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public LibraryEFCoreDbSchemaMigrator(
+    public LibraryWebAppEFCoreDbSchemaMigrator(
         IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -15,14 +15,14 @@ public class LibraryEFCoreDbSchemaMigrator : ITransientDependency
 
     public async Task MigrateAsync()
     {
-        /* We intentionally resolving the LibraryDbContext
+        /* We intentionally resolving the LibraryWebAppDbContext
          * from IServiceProvider (instead of directly injecting it)
          * to properly get the connection string of the current tenant in the
          * current scope.
          */
 
         await _serviceProvider
-            .GetRequiredService<LibraryDbContext>()
+            .GetRequiredService<LibraryWebAppDbContext>()
             .Database
             .MigrateAsync();
     }

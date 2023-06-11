@@ -1,13 +1,13 @@
 ﻿using LibraryWebApp.Shared;
-using Volo.Abp.Domain.Entities;
+using Volo.Abp.Application.Dtos;
 
-namespace LibraryWebApp.Entities;
+namespace LibraryWebApp.Services.Dtos;
 
-public class Book : Entity<Guid>
+public class BookDto : EntityDto<Guid>
 {
     public required string Name { get; set; }
-
+    
     public required BookType Type { get; set; }
-
+    
     public required DateTime PublishDate { get; set; }
 }

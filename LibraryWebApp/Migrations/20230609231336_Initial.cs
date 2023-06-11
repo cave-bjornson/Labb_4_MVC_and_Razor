@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Labb4MVCandRazor.Migrations
+namespace LibraryWebApp.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

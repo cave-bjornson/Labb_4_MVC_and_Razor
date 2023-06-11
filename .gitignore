@@ -261,3 +261,5 @@ LibraryWebApp/Logs/*
 
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
+
+logs.txt

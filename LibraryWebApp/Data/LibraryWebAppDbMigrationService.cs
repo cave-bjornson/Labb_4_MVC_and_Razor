@@ -9,18 +9,18 @@ using Volo.Abp.TenantManagement;
 
 namespace LibraryWebApp.Data;
 
-public class LibraryDbMigrationService : ITransientDependency
+public class LibraryWebAppDbMigrationService : ITransientDependency
 {
-    public ILogger<LibraryDbMigrationService> Logger { get; set; }
+    public ILogger<LibraryWebAppDbMigrationService> Logger { get; set; }
 
     private readonly IDataSeeder _dataSeeder;
-    private readonly LibraryEFCoreDbSchemaMigrator _dbSchemaMigrator;
+    private readonly LibraryWebAppEFCoreDbSchemaMigrator _dbSchemaMigrator;
     private readonly ITenantRepository _tenantRepository;
     private readonly ICurrentTenant _currentTenant;
 
-    public LibraryDbMigrationService(
+    public LibraryWebAppDbMigrationService(
         IDataSeeder dataSeeder,
-        LibraryEFCoreDbSchemaMigrator dbSchemaMigrator,
+        LibraryWebAppEFCoreDbSchemaMigrator dbSchemaMigrator,
         ITenantRepository tenantRepository,
         ICurrentTenant currentTenant)
     {
@@ -29,7 +29,7 @@ public class LibraryDbMigrationService : ITransientDependency
         _tenantRepository = tenantRepository;
         _currentTenant = currentTenant;
 
-        Logger = NullLogger<LibraryDbMigrationService>.Instance;
+        Logger = NullLogger<LibraryWebAppDbMigrationService>.Instance;
     }
 
     public async Task MigrateAsync()

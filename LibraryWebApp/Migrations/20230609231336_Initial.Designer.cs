@@ -9,9 +9,9 @@ using Volo.Abp.EntityFrameworkCore;
 
 #nullable disable
 
-namespace Labb4MVCandRazor.Migrations
+namespace LibraryWebApp.Migrations
 {
-    [DbContext(typeof(LibraryDbContext))]
+    [DbContext(typeof(LibraryWebAppDbContext))]
     [Migration("20230609231336_Initial")]
     partial class Initial
     {

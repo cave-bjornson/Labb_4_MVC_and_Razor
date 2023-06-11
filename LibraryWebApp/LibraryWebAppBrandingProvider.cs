@@ -4,7 +4,7 @@ using Volo.Abp.Ui.Branding;
 namespace LibraryWebApp;
 
 [Dependency(ReplaceServices = true)]
-public class Labb_4_MVC_and_RazorBrandingProvider : DefaultBrandingProvider
+public class LibraryWebAppBrandingProvider : DefaultBrandingProvider
 {
     public override string AppName => "LibraryWebApp";
 }

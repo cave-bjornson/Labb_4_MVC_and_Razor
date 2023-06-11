@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LibraryWebApp.Entities;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
@@ -10,9 +12,12 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
 namespace LibraryWebApp.Data;
 
-public class LibraryDbContext : AbpDbContext<LibraryDbContext>
+public class LibraryWebAppDbContext : AbpDbContext<LibraryWebAppDbContext>
 {
-    public LibraryDbContext(DbContextOptions<LibraryDbContext> options)
+    public DbSet<Book> Books { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+
+    public LibraryWebAppDbContext(DbContextOptions<LibraryWebAppDbContext> options)
         : base(options)
     {
     }
@@ -32,5 +37,17 @@ public class LibraryDbContext : AbpDbContext<LibraryDbContext>
         builder.ConfigureTenantManagement();
 
         /* Configure your own entities here */
+
+        builder.Entity<Book>(book =>
+        {
+            book.ConfigureByConvention();
+            book.Property(b => b.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<Customer>(customer =>
+        {
+            customer.ConfigureByConvention();
+            customer.Property(c => c.Name).IsRequired().HasMaxLength(50);
+        });
     }
 }

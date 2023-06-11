@@ -8,10 +8,10 @@ using Volo.Abp.EntityFrameworkCore;
 
 #nullable disable
 
-namespace Labb4MVCandRazor.Migrations
+namespace LibraryWebApp.Migrations
 {
-    [DbContext(typeof(LibraryDbContext))]
-    partial class Labb4MVCandRazorDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(LibraryWebAppDbContext))]
+    partial class LibraryWebAppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,42 @@ namespace Labb4MVCandRazor.Migrations
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.Sqlite)
                 .HasAnnotation("ProductVersion", "7.0.1");
+
+            modelBuilder.Entity("LibraryWebApp.Entities.Book", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("LibraryWebApp.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
+                });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {

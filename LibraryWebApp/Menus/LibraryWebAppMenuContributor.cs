@@ -4,7 +4,7 @@ using Volo.Abp.UI.Navigation;
 
 namespace LibraryWebApp.Menus;
 
-public class LibraryMenuContributor : IMenuContributor
+public class LibraryWebAppMenuContributor : IMenuContributor
 {
     public async Task ConfigureMenuAsync(MenuConfigurationContext context)
     {
@@ -22,7 +22,7 @@ public class LibraryMenuContributor : IMenuContributor
         context.Menu.Items.Insert(
             0,
             new ApplicationMenuItem(
-                LibraryMenus.Home,
+                LibraryWebAppMenus.Home,
                 l["Menu:Home"],
                 "~/",
                 icon: "fas fa-home",
@@ -30,7 +30,7 @@ public class LibraryMenuContributor : IMenuContributor
             )
         );
 
-        if (Labb_4_MVC_and_RazorModule.IsMultiTenant)
+        if (LibraryWebAppModule.IsMultiTenant)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
         }

@@ -3,17 +3,17 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace LibraryWebApp.Data;
 
-public class LibraryDbContextFactory : IDesignTimeDbContextFactory<LibraryDbContext>
+public class LibraryWebAppDbContextFactory : IDesignTimeDbContextFactory<LibraryWebAppDbContext>
 {
-    public LibraryDbContext CreateDbContext(string[] args)
+    public LibraryWebAppDbContext CreateDbContext(string[] args)
     {
 
         var configuration = BuildConfiguration();
 
-        var builder = new DbContextOptionsBuilder<LibraryDbContext>()
+        var builder = new DbContextOptionsBuilder<LibraryWebAppDbContext>()
             .UseSqlite(configuration.GetConnectionString("Default"));
 
-        return new LibraryDbContext(builder.Options);
+        return new LibraryWebAppDbContext(builder.Options);
     }
 
     private static IConfigurationRoot BuildConfiguration()
