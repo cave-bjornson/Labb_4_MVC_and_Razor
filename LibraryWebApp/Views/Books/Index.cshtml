@@ -1,0 +1,37 @@
+@model Volo.Abp.Application.Dtos.PagedResultDto<LibraryWebApp.Services.Dtos.BookDto>
+@{
+    ViewData["Title"] = "Books";
+    int idx = 0;
+}
+
+<abp-card>
+    <abp-card-header>
+        <h2>Books</h2>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table hoverable-rows="true" striped-rows="true">
+            <thead>
+            <tr>
+                <th scope="Column">#</th>
+                <th scope="Column">Name</th>
+                <th scope="Column">Type</th>
+                <th scope="Column">Publish Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var modelItem in Model.Items)
+            {
+                <tr>
+                    @{
+                        idx++;
+                    }
+                    <th scope="Row">@idx</th>
+                    <td>@modelItem.Name</td>
+                    <td>@modelItem.Type</td>
+                    <td>@modelItem.PublishDate</td>
+                </tr>
+            }
+            </tbody>
+        </abp-table>
+    </abp-card-body>
+</abp-card>

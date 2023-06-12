@@ -7,10 +7,10 @@ using Volo.Abp.Domain.Repositories;
 namespace LibraryWebApp.Services;
 
 public class BookAppService
-    : CrudAppService<Book, BookDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateBookDto>
+    : CrudAppService<Book, BookDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateBookDto>,
+        IBookAppService
 {
     /// <inheritdoc />
-    public BookAppService(IRepository<Book, Guid> repository) : base(repository)
-    {
-    }
+    public BookAppService(IRepository<Book, Guid> repository)
+        : base(repository) { }
 }

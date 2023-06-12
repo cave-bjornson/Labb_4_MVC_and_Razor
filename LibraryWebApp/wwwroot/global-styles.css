@@ -4,3 +4,20 @@
     --lpx-logo: url('/images/logo/leptonx/logo-light.png');
     --lpx-logo-icon: url('/images/logo/leptonx/logo-light-thumbnail.png');
 }
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: var(--bs-table-striped-bg) !important;
+    color: var(--bs-table-striped-color) !important;
+}
+
+/*.table-hover > tbody > tr:hover,*/
+/*.table-hover > tbody > td:hover*/
+/*{*/
+/*    --bs-table-accent-bg: var(--bs-table-hover-bg) !important;*/
+/*    color: var(--bs-table-hover-color) !important;*/
+/*}*/
+
+.table-hover > tbody > tr:hover > * {
+    --bs-table-accent-bg: var(--bs-table-hover-bg) !important;
+    color: var(--bs-table-hover-color) !important;
+}

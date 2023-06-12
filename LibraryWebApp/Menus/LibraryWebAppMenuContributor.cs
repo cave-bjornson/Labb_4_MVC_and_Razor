@@ -23,11 +23,19 @@ public class LibraryWebAppMenuContributor : IMenuContributor
             0,
             new ApplicationMenuItem(
                 LibraryWebAppMenus.Home,
-                l["Menu:Home"],
+                nameof(LibraryWebAppMenus.Home),
                 "~/",
                 icon: "fas fa-home",
                 order: 0
             )
+        );
+
+        context.Menu.AddItem(
+            new ApplicationMenuItem(
+                LibraryWebAppMenus.Library,
+                nameof(LibraryWebAppMenus.Library),
+                icon: "fa fa-book"
+            ).AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Books, "Books", url: "/Books"))
         );
 
         if (LibraryWebAppModule.IsMultiTenant)
