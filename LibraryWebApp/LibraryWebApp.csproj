@@ -95,7 +95,6 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
-    <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,13 @@
-@model Volo.Abp.Application.Dtos.PagedResultDto<LibraryWebApp.Services.Dtos.BookDto>
+@using LibraryWebApp.Services.Dtos
+@using LibraryWebApp.Views.Books
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Button
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Card
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Grid
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Table
+@model BookIndexViewModel
+
 @{
     ViewData["Title"] = "Books";
     int idx = 0;
@@ -6,7 +15,14 @@
 
 <abp-card>
     <abp-card-header>
-        <h2>Books</h2>
+        <abp-row>
+            <abp-column>
+                <abp-card-title>Books</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                <abp-button id="NewBookButton" text="New Book" icon="plus" button-type="Primary" data-bs-toggle="modal" data-bs-target="#CreateModal"/>
+            </abp-column>
+        </abp-row>
     </abp-card-header>
     <abp-card-body>
         <abp-table hoverable-rows="true" striped-rows="true">
@@ -19,19 +35,29 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var modelItem in Model.Items)
+            @foreach (var item in Model.Books)
             {
                 <tr>
                     @{
                         idx++;
                     }
                     <th scope="Row">@idx</th>
-                    <td>@modelItem.Name</td>
-                    <td>@modelItem.Type</td>
-                    <td>@modelItem.PublishDate</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PublishDate)</td>
                 </tr>
             }
             </tbody>
         </abp-table>
     </abp-card-body>
 </abp-card>
+
+<abp-dynamic-form asp-action="Create" abp-model="@Model.Book">
+    <abp-modal centered="true" scrollable="true" size="Large" id="CreateModal">
+        <abp-modal-header title="New Book"></abp-modal-header>
+        <abp-modal-body>
+            <abp-form-content/>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@AbpModalButtons.Cancel|AbpModalButtons.Save"></abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>
