@@ -145,7 +145,7 @@ public class LibraryWebAppModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureVirtualFiles(hostingEnvironment);
-        //ConfigureLocalization();
+        ConfigureLocalization();
         ConfigureEfCore(context);
     }
 

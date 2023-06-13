@@ -14,7 +14,7 @@ public class LibraryWebAppAutoMapperProfile : Profile
         CreateMap<CreateUpdateBookDto, Book>();
         CreateMap<Customer, CustomerDto>();
         CreateMap<CreateUpdateCustomerDto, Customer>();
-        // CreateMap<BookIndexViewModel, CreateUpdateBookDto>().ReverseMap();
+        // CreateMap<CustomerIndexViewModel, CreateUpdateBookDto>().ReverseMap();
         CreateMap<BookDto, BookViewModel>();
         CreateMap<BookViewModel, CreateUpdateBookDto>();
     }

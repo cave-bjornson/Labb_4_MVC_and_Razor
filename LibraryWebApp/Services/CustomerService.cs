@@ -13,7 +13,7 @@ public class CustomerService
         Guid,
         PagedAndSortedResultRequestDto,
         CreateUpdateCustomerDto
-    >
+    >, ICustomerService
 {
     /// <inheritdoc />
     public CustomerService(IRepository<Customer, Guid> repository)

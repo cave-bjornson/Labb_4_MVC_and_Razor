@@ -8,4 +8,7 @@ public class LibraryWebAppMenus
     //Add your menu items here...
     public const string Library = Prefix + ".Library";
     public const string Books = Library + ".Books";
+
+    public const string Customers = Prefix + ".Customers";
+    public const string Manage = Customers + ".Manage";
 }

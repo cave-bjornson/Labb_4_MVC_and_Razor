@@ -1,4 +1,5 @@
 ﻿using LibraryWebApp.Entities;
+using LibraryWebApp.Permissions;
 using LibraryWebApp.Services.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -12,5 +13,12 @@ public class BookAppService
 {
     /// <inheritdoc />
     public BookAppService(IRepository<Book, Guid> repository)
-        : base(repository) { }
+        : base(repository)
+    {
+        GetPolicyName = LibraryPermissions.Books.Default;
+        GetListPolicyName = LibraryPermissions.Books.Default;
+        CreatePolicyName = LibraryPermissions.Books.Create;
+        UpdatePolicyName = LibraryPermissions.Books.Edit;
+        DeletePolicyName = LibraryPermissions.Books.Delete;
+    }
 }

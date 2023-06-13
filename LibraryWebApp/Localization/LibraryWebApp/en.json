@@ -3,6 +3,11 @@
   "texts": {
     "Welcome_Title": "Welcome",
     "Welcome_Text": "This is a minimalist, single layer application startup template for the ABP Framework.",
-    "Menu:Home": "Home"
+    "Menu:Home": "Home",
+    "Permission:Library": "Library",
+    "Permission:Books": "View Books",
+    "Permission:Books.Create": "Create new books",
+    "Permission:Books.Edit": "Edit books",
+    "Permission:Books.Delete": "Delete books"
   }
 }

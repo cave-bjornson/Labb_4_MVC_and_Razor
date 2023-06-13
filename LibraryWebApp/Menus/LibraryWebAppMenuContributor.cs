@@ -37,6 +37,14 @@ public class LibraryWebAppMenuContributor : IMenuContributor
                 icon: "fa fa-book"
             ).AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Books, "Books", url: "/Books"))
         );
+        
+        context.Menu.AddItem(
+            new ApplicationMenuItem(
+                LibraryWebAppMenus.Customers,
+                nameof(LibraryWebAppMenus.Customers),
+                icon: "fa fa-user"
+            ).AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Manage, "Manage", url: "/Customers"))
+        );
 
         if (LibraryWebAppModule.IsMultiTenant)
         {
