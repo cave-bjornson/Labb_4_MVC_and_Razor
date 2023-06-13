@@ -1,4 +1,5 @@
 ﻿using LibraryWebApp.Entities;
+using LibraryWebApp.Permissions;
 using LibraryWebApp.Services.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -13,9 +14,17 @@ public class CustomerService
         Guid,
         PagedAndSortedResultRequestDto,
         CreateUpdateCustomerDto
-    >, ICustomerService
+    >,
+        ICustomerService
 {
     /// <inheritdoc />
     public CustomerService(IRepository<Customer, Guid> repository)
-        : base(repository) { }
+        : base(repository)
+    {
+        GetPolicyName = LibraryPermissions.Customers.Default;
+        GetListPolicyName = LibraryPermissions.Customers.Default;
+        CreatePolicyName = LibraryPermissions.Customers.Create;
+        UpdatePolicyName = LibraryPermissions.Customers.Edit;
+        DeletePolicyName = LibraryPermissions.Customers.Delete;
+    }
 }

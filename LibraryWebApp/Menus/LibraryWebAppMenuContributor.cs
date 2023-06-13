@@ -1,4 +1,6 @@
 ﻿using LibraryWebApp.Localization;
+using LibraryWebApp.Permissions;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.TenantManagement.Web.Navigation;
 using Volo.Abp.UI.Navigation;
 
@@ -37,13 +39,19 @@ public class LibraryWebAppMenuContributor : IMenuContributor
                 icon: "fa fa-book"
             ).AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Books, "Books", url: "/Books"))
         );
-        
+
         context.Menu.AddItem(
             new ApplicationMenuItem(
                 LibraryWebAppMenus.Customers,
                 nameof(LibraryWebAppMenus.Customers),
                 icon: "fa fa-user"
-            ).AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Manage, "Manage", url: "/Customers"))
+            ).AddItem(
+                new ApplicationMenuItem(
+                    LibraryWebAppMenus.Manage,
+                    "Manage",
+                    url: "/Customers"
+                ).RequirePermissions(LibraryPermissions.Customers.Default)
+            )
         );
 
         if (LibraryWebAppModule.IsMultiTenant)

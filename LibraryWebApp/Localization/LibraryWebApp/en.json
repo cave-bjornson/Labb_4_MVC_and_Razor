@@ -8,6 +8,10 @@
     "Permission:Books": "View Books",
     "Permission:Books.Create": "Create new books",
     "Permission:Books.Edit": "Edit books",
-    "Permission:Books.Delete": "Delete books"
+    "Permission:Books.Delete": "Delete books",
+    "Permission:Customers": "View Customers",
+    "Permission:Customers.Create": "Create new Customers",
+    "Permission:Customers.Edit": "Edit Customers",
+    "Permission:Customers.Delete": "Delete Customers"
   }
 }

@@ -11,10 +11,30 @@ public class LibraryPermissionDefinitionProvider : PermissionDefinitionProvider
     {
         var libraryGroup = context.AddGroup(LibraryPermissions.GroupName, L("Permission:Library"));
 
-        var booksPermission = libraryGroup.AddPermission(LibraryPermissions.Books.Default, L("Permission:Books"));
+        var booksPermission = libraryGroup.AddPermission(
+            LibraryPermissions.Books.Default,
+            L("Permission:Books")
+        );
         booksPermission.AddChild(LibraryPermissions.Books.Create, L("Permission:Books.Create"));
         booksPermission.AddChild(LibraryPermissions.Books.Edit, L("Permission:Books.Edit"));
         booksPermission.AddChild(LibraryPermissions.Books.Delete, L("Permission:Books.Delete"));
+
+        var customersPermission = libraryGroup.AddPermission(
+            LibraryPermissions.Customers.Default,
+            L("Permission:Customers")
+        );
+        customersPermission.AddChild(
+            LibraryPermissions.Customers.Create,
+            L("Permission:Customers.Create")
+        );
+        customersPermission.AddChild(
+            LibraryPermissions.Customers.Edit,
+            L("Permission:Customers.Edit")
+        );
+        customersPermission.AddChild(
+            LibraryPermissions.Customers.Delete,
+            L("Permission:Customers.Delete")
+        );
     }
 
     private static LocalizableString L(string name)
