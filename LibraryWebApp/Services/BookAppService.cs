@@ -15,8 +15,6 @@ public class BookAppService
     public BookAppService(IRepository<Book, Guid> repository)
         : base(repository)
     {
-        GetPolicyName = LibraryPermissions.Books.Default;
-        GetListPolicyName = LibraryPermissions.Books.Default;
         CreatePolicyName = LibraryPermissions.Books.Create;
         UpdatePolicyName = LibraryPermissions.Books.Edit;
         DeletePolicyName = LibraryPermissions.Books.Delete;

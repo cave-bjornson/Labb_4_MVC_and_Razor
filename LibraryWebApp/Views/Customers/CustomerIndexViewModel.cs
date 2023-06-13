@@ -17,15 +17,19 @@ public class CustomerIndexViewModel
     public IEnumerable<CustomerViewModel> Customers { get; set; }
 
     [DynamicFormIgnore]
-    public IEnumerable<SelectListItem> CustomerUserIds { get; set; }
+    public IEnumerable<SelectListItem> CustomerUserNames { get; set; }
 
     [Required]
     [StringLength(50)]
     public string Name { get; set; }
 
     [Required]
-    [SelectItems(nameof(CustomerUserIds))]
-    public string UserId { get; set; }
+    [StringLength(50)]
+    public string Surname { get; set; }
+
+    [Required]
+    [SelectItems(nameof(CustomerUserNames))]
+    public string UserName { get; set; }
 }
 
 public class CustomerViewModel
@@ -33,6 +37,10 @@ public class CustomerViewModel
     [Required]
     [StringLength(50)]
     public string Name { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Surname { get; set; }
 
     [Required]
     public string UserName { get; set; }

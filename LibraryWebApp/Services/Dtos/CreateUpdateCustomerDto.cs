@@ -6,9 +6,13 @@ namespace LibraryWebApp.Services.Dtos;
 public class CreateUpdateCustomerDto : EntityDto
 {
     [Required]
+    public string UserName { get; set; }
+    
+    [Required]
     [StringLength(50)]
     public string Name { get; set; }
     
     [Required]
-    public Guid UserId { get; set; }
+    [StringLength(50)]
+    public string Surname { get; set; }
 }

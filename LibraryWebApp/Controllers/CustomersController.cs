@@ -16,34 +16,45 @@ public class CustomersController : AbpController
 {
     private readonly ICustomerService _service;
     private readonly IdentityUserManager _userManager;
+    private readonly IIdentityUserAppService _userService;
+    private readonly IIdentityRoleAppService _roleService;
 
-    public CustomersController(ICustomerService service, IdentityUserManager userManager)
+    public CustomersController(
+        ICustomerService service,
+        IdentityUserManager userManager,
+        IIdentityUserAppService userService,
+        IIdentityRoleAppService roleService
+    )
     {
         _service = service;
         _userManager = userManager;
+        _userService = userService;
+        _roleService = roleService;
     }
 
     // GET
     public async Task<IActionResult> Index()
     {
         var customers = await _service.GetListAsync(new PagedAndSortedResultRequestDto());
-        var customerUsers = await _userManager.GetUsersInRoleAsync("customer");
 
-        var customerModels = customers.Items.Join(
-            customerUsers,
-            dto => dto.UserId,
-            user => user.Id,
-            (dto, user) => new CustomerViewModel { Name = dto.Name, UserName = user.UserName }
+        var customerModels = customers.Items.Select(
+            c =>
+                new CustomerViewModel
+                {
+                    UserName = c.UserName,
+                    Name = c.Name,
+                    Surname = c.Surname
+                }
         );
 
-        var selectListItems = customerUsers.Select(
-            cu => new SelectListItem { Value = cu.Id.ToString(), Text = cu.UserName }
+        var selectListItems = customers.Items.Select(
+            c => new SelectListItem { Value = c.UserName, Text = c.UserName }
         );
 
         var model = new CustomerIndexViewModel
         {
             Customers = customerModels,
-            CustomerUserIds = selectListItems
+            CustomerUserNames = selectListItems
         };
 
         return View(model);
@@ -51,12 +62,19 @@ public class CustomersController : AbpController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name, UserId")] CustomerIndexViewModel model)
+    public async Task<IActionResult> Create(
+        [Bind("UserName, Name, SurName")] CustomerIndexViewModel model
+    )
     {
-        Logger.LogInformation("CreateCustomer {@Customer}", model);
+        // Logger.LogInformation("CreateCustomer {@Customer}", model);
 
         await _service.CreateAsync(
-            new CreateUpdateCustomerDto { UserId = Guid.Parse(model.UserId), Name = model.Name }
+            new CreateUpdateCustomerDto
+            {
+                UserName = model.UserName,
+                Name = model.Name,
+                Surname = model.Surname
+            }
         );
 
         return RedirectToAction("Index");

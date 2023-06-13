@@ -1,11 +1,17 @@
+@using LibraryWebApp.Localization
+@using LibraryWebApp.Permissions
 @using LibraryWebApp.Services.Dtos
 @using LibraryWebApp.Views.Books
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Button
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Card
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Grid
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Table
+@inject IStringLocalizer<LibraryWebAppResource> L
+@inject IAuthorizationService AuthorizationService;
 @model BookIndexViewModel
 
 @{
@@ -20,7 +26,10 @@
                 <abp-card-title>Books</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-                <abp-button id="NewBookButton" text="New Book" icon="plus" button-type="Primary" data-bs-toggle="modal" data-bs-target="#CreateModal"/>
+                @if (await AuthorizationService.IsGrantedAsync(LibraryPermissions.Books.Create))
+                {
+                    <abp-button id="NewBookButton" text="New Book" icon="plus" button-type="Primary" data-bs-toggle="modal" data-bs-target="#CreateModal"/>
+                }
             </abp-column>
         </abp-row>
     </abp-card-header>
@@ -52,12 +61,15 @@
     </abp-card-body>
 </abp-card>
 
-<abp-dynamic-form asp-action="Create" abp-model="@Model.Book">
-    <abp-modal centered="true" scrollable="true" size="Large" id="CreateModal">
-        <abp-modal-header title="New Book"></abp-modal-header>
-        <abp-modal-body>
-            <abp-form-content/>
-        </abp-modal-body>
-        <abp-modal-footer buttons="@AbpModalButtons.Cancel|AbpModalButtons.Save"></abp-modal-footer>
-    </abp-modal>
-</abp-dynamic-form>
+@if (await AuthorizationService.IsGrantedAsync(LibraryPermissions.Books.Create))
+{
+    <abp-dynamic-form asp-action="Create" abp-model="@Model.Book">
+        <abp-modal centered="true" scrollable="true" size="Large" id="CreateModal">
+            <abp-modal-header title="New Book"></abp-modal-header>
+            <abp-modal-body>
+                <abp-form-content/>
+            </abp-modal-body>
+            <abp-modal-footer buttons="@AbpModalButtons.Cancel|AbpModalButtons.Save"></abp-modal-footer>
+        </abp-modal>
+    </abp-dynamic-form>
+}

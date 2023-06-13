@@ -5,7 +5,8 @@ namespace LibraryWebApp.Entities;
 
 public class Customer : Entity<Guid>
 {
+    public required string UserName { get; set; }
     public required string Name { get; set; }
 
-    public required Guid UserId { get; set; }
+    public required string Surname { get; set; }
 }
