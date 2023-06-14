@@ -4,6 +4,7 @@ using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
+using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
@@ -16,11 +17,10 @@ public class LibraryWebAppDbContext : AbpDbContext<LibraryWebAppDbContext>
 {
     public DbSet<Book> Books { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<Loan> Loans { get; set; }
 
     public LibraryWebAppDbContext(DbContextOptions<LibraryWebAppDbContext> options)
-        : base(options)
-    {
-    }
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -47,7 +47,17 @@ public class LibraryWebAppDbContext : AbpDbContext<LibraryWebAppDbContext>
         builder.Entity<Customer>(customer =>
         {
             customer.ConfigureByConvention();
+            customer.HasIndex(c => c.UserName);
             customer.Property(c => c.Name).IsRequired().HasMaxLength(50);
+        });
+
+        builder.Entity<Loan>(loan =>
+        {
+            loan.ConfigureByConvention();
+            loan.HasIndex(l => new { l.CustomerId, l.BookId });
+
+            loan.HasOne<Customer>().WithMany().HasForeignKey(l => l.CustomerId).IsRequired();
+            loan.HasOne<Book>().WithMany().HasForeignKey(b => b.BookId).IsRequired();
         });
     }
 }

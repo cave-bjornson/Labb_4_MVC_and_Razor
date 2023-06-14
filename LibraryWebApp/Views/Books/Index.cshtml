@@ -1,8 +1,11 @@
+@using System.Linq.Expressions
 @using LibraryWebApp.Localization
 @using LibraryWebApp.Permissions
 @using LibraryWebApp.Services.Dtos
 @using LibraryWebApp.Views.Books
+@using LibraryWebApp.Views.Loans
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Button
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Card
@@ -10,8 +13,11 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Grid
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Table
+@using Volo.Abp.Identity
+@using Volo.Abp.Users
 @inject IStringLocalizer<LibraryWebAppResource> L
 @inject IAuthorizationService AuthorizationService;
+@inject ICurrentUser CurrentUser;
 @model BookIndexViewModel
 
 @{
@@ -41,6 +47,7 @@
                 <th scope="Column">Name</th>
                 <th scope="Column">Type</th>
                 <th scope="Column">Publish Date</th>
+                <th scope="Column">Acion</th>
             </tr>
             </thead>
             <tbody>
@@ -54,6 +61,13 @@
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.Type)</td>
                     <td>@Html.DisplayFor(modelItem => item.PublishDate)</td>
+                    <td>
+                        <form asp-controller="Loans" asp-action="MakeLoan">
+                            <input type="hidden" name="customerUserName" value="@CurrentUser.UserName" />
+                            <input type="hidden" name="bookId" value="@item.BookId" />
+                            <abp-button button-type="Primary" type="submit">Make Loan</abp-button>
+                        </form>
+                    </td>
                 </tr>
             }
             </tbody>

@@ -61,7 +61,38 @@ namespace LibraryWebApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserName");
+
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("LibraryWebApp.Entities.Loan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LoanDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ReturnDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("CustomerId", "BookId");
+
+                    b.ToTable("Loans");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -1664,6 +1695,21 @@ namespace LibraryWebApp.Migrations
                     b.HasKey("TenantId", "Name");
 
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
+                });
+
+            modelBuilder.Entity("LibraryWebApp.Entities.Loan", b =>
+                {
+                    b.HasOne("LibraryWebApp.Entities.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LibraryWebApp.Entities.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

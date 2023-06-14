@@ -36,16 +36,20 @@ public class CustomersController : AbpController
     public async Task<IActionResult> Index()
     {
         var customers = await _service.GetListAsync(new PagedAndSortedResultRequestDto());
+        // var customerModels = customers.Items.Select(
+        //     c =>
+        //         new CustomerViewModel
+        //         {
+        //             UserName = c.UserName,
+        //             Name = c.Name,
+        //             Surname = c.Surname
+        //         }
+        // );
 
-        var customerModels = customers.Items.Select(
-            c =>
-                new CustomerViewModel
-                {
-                    UserName = c.UserName,
-                    Name = c.Name,
-                    Surname = c.Surname
-                }
-        );
+        var customerModels = ObjectMapper.Map<
+            IReadOnlyList<CustomerDto>,
+            IEnumerable<CustomerViewModel>
+        >(customers.Items);
 
         var selectListItems = customers.Items.Select(
             c => new SelectListItem { Value = c.UserName, Text = c.UserName }
@@ -56,6 +60,15 @@ public class CustomersController : AbpController
             Customers = customerModels,
             CustomerUserNames = selectListItems
         };
+
+        return View(model);
+    }
+
+    public async Task<IActionResult> Details(string id)
+    {
+        var customer = await _service.GetAsync(Guid.Parse(id));
+
+        var model = ObjectMapper.Map<CustomerDto, CustomerViewModel>(customer);
 
         return View(model);
     }
