@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Linq.Dynamic.Core;
+using AutoMapper;
 using LibraryWebApp.Services;
 using LibraryWebApp.Services.Dtos;
 using LibraryWebApp.Views.Books;
 using LibraryWebApp.Views.Customers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Identity;
@@ -51,8 +53,17 @@ public class CustomersController : AbpController
             IEnumerable<CustomerViewModel>
         >(customers.Items);
 
-        var selectListItems = customers.Items.Select(
-            c => new SelectListItem { Value = c.UserName, Text = c.UserName }
+        var customerRoleId = _roleService
+            .GetAllListAsync()
+            .Result.Items.FirstOrDefault(dto => dto.Name == "customer")!
+            .Id;
+
+        var users = await _userManager.GetUsersInRoleAsync("customer");
+
+        var customerUserNames = users.Select(user => user.UserName);
+
+        var selectListItems = customerUserNames.Select(
+            c => new SelectListItem { Value = c, Text = c }
         );
 
         var model = new CustomerIndexViewModel
@@ -68,15 +79,41 @@ public class CustomersController : AbpController
     {
         var customer = await _service.GetAsync(Guid.Parse(id));
 
-        var model = ObjectMapper.Map<CustomerDto, CustomerViewModel>(customer);
+        var customerUserNames = await _service.GetCustomerUserNames();
+
+        var model = ObjectMapper.Map<CustomerDto, EditCustomerViewModel>(customer);
+
+        model.CustomerUserNames = customerUserNames.Select(
+            c => new SelectListItem { Value = c, Text = c }
+        );
+
+        Logger.LogInformation("editmodel {Model}", model.Dump());
 
         return View(model);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Details(
+        [Bind("Id, UserName, Name, Surname")] EditCustomerViewModel model
+    )
+    {
+        await _service.UpdateAsync(
+            Guid.Parse(model.Id),
+            new CreateUpdateCustomerDto
+            {
+                UserName = model.UserName,
+                Name = model.Name,
+                Surname = model.Surname
+            }
+        );
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(
-        [Bind("UserName, Name, SurName")] CustomerIndexViewModel model
+        [Bind("UserName, Name, Surname")] CustomerIndexViewModel model
     )
     {
         // Logger.LogInformation("CreateCustomer {@Customer}", model);
@@ -89,6 +126,15 @@ public class CustomersController : AbpController
                 Surname = model.Surname
             }
         );
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(string CustomerId)
+    {
+        await _service.DeleteAsync(Guid.Parse(CustomerId));
 
         return RedirectToAction("Index");
     }

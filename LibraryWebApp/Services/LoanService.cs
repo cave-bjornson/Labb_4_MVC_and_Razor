@@ -1,4 +1,6 @@
-﻿using LibraryWebApp.Entities;
+﻿using System.Linq.Dynamic.Core;
+using LibraryWebApp.Entities;
+using LibraryWebApp.Permissions;
 using LibraryWebApp.Repositories;
 using LibraryWebApp.Services.Dtos;
 using Volo.Abp.Application.Dtos;
@@ -21,6 +23,8 @@ public class LoanService
     {
         _loanRepository = repository;
         _customerRepository = customerRepository;
+
+        GetPolicyName = LibraryPermissions.Loans.Default;
     }
 
     /// <inheritdoc />
@@ -64,5 +68,16 @@ public class LoanService
         );
 
         return newLoan;
+    }
+
+    public async Task<bool> IsOnLoan(Guid BookId)
+    {
+        var queryable = await ReadOnlyRepository.GetQueryableAsync();
+
+        var query = queryable
+            .Where(loan => loan.BookId == BookId)
+            .Any(dto => !dto.ReturnDate.HasValue);
+
+        return query;
     }
 }

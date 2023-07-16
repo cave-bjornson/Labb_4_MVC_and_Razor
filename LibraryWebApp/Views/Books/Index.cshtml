@@ -14,6 +14,7 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Table
 @using Volo.Abp.Identity
+@using Volo.Abp.Threading
 @using Volo.Abp.Users
 @inject IStringLocalizer<LibraryWebAppResource> L
 @inject IAuthorizationService AuthorizationService;
@@ -47,7 +48,7 @@
                 <th scope="Column">Name</th>
                 <th scope="Column">Type</th>
                 <th scope="Column">Publish Date</th>
-                <th scope="Column">Acion</th>
+                <th scope="Column">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -62,11 +63,21 @@
                     <td>@Html.DisplayFor(modelItem => item.Type)</td>
                     <td>@Html.DisplayFor(modelItem => item.PublishDate)</td>
                     <td>
-                        <form asp-controller="Loans" asp-action="MakeLoan">
-                            <input type="hidden" name="customerUserName" value="@CurrentUser.UserName" />
-                            <input type="hidden" name="bookId" value="@item.BookId" />
-                            <abp-button button-type="Primary" type="submit">Make Loan</abp-button>
-                        </form>
+                        @if (item.OnLoan)
+                        {
+                            @Html.Display("On Loan")
+                        }
+                        else
+                        {
+                            if (!CurrentUser.IsInRole("admin"))
+                            {
+                                <form asp-controller="Loans" asp-action="MakeLoan">
+                                    <input type="hidden" name="customerUserName" value="@CurrentUser.UserName"/>
+                                    <input type="hidden" name="bookId" value="@item.BookId"/>
+                                    <abp-button button-type="Primary" type="submit">Make Loan</abp-button>
+                                </form>
+                            }
+                        }
                     </td>
                 </tr>
             }

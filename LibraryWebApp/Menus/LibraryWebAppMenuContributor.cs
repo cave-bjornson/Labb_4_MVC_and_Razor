@@ -37,7 +37,15 @@ public class LibraryWebAppMenuContributor : IMenuContributor
                 LibraryWebAppMenus.Library,
                 nameof(LibraryWebAppMenus.Library),
                 icon: "fa fa-book"
-            ).AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Books, "Books", url: "/Books"))
+            )
+                .AddItem(new ApplicationMenuItem(LibraryWebAppMenus.Books, "Books", url: "/Books"))
+                .AddItem(
+                    new ApplicationMenuItem(
+                        LibraryWebAppMenus.Loans,
+                        "Loans",
+                        url: "/Loans"
+                    ).RequirePermissions(LibraryPermissions.Loans.Default)
+                )
         );
 
         context.Menu.AddItem(

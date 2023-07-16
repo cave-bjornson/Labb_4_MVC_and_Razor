@@ -16,4 +16,6 @@ public interface ILoanService
     Task<List<LoanDto>> GetListWithNames();
 
     Task<LoanDto> MakeLoan(string CustomerUserName, Guid BookId);
+
+    Task<bool> IsOnLoan(Guid BookId);
 }

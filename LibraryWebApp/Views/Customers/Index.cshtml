@@ -1,0 +1,70 @@
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Button
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Card
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Grid
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Table
+
+@model LibraryWebApp.Views.Customers.CustomerIndexViewModel
+
+@{
+    ViewData["Title"] = "Customers";
+    int idx = 0;
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column>
+                <abp-card-title>Customers</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                <abp-button id="NewCustomerButton" text="New Customer" icon="plus" button-type="Primary" data-bs-toggle="modal" data-bs-target="#CreateModal"/>
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table hoverable-rows="true" striped-rows="true">
+            <thead>
+            <tr>
+                <th scope="Column">#</th>
+                <th scope="Column">UserName</th>
+                <th scope="Column">Name</th>
+                <th scope="Column">Surname</th>
+                <th scope="Column" class="float-end">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Customers)
+            {
+                <tr>
+                    @{
+                        idx++;
+                    }
+                    <th scope="Row">@idx</th>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Surname)</td>
+                    <td>
+                        <a abp-button="Link" asp-action="Details" asp-route-id="@item.Id" class="float-end">Customer Details</a>
+                        <form asp-controller="Customers" asp-action="Delete">
+                            <input type="hidden" name="CustomerId" value="@item.Id"/>
+                            <abp-button button-type="Link" type="submit">Delete</abp-button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </abp-table>
+    </abp-card-body>
+</abp-card>
+
+<abp-dynamic-form asp-action="Create" abp-model="@Model">
+    <abp-modal centered="true" scrollable="true" size="Large" id="CreateModal">
+        <abp-modal-header title="New Customer"></abp-modal-header>
+        <abp-modal-body>
+            <abp-form-content/>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@AbpModalButtons.Cancel|AbpModalButtons.Save"></abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>

@@ -5,6 +5,8 @@ namespace LibraryWebApp.Views.Loans;
 
 public class LoanViewModel
 {
+    public string LoanId { get; set; }
+    
     [DisplayName("Book")]
     public string BookName { get; set; }
     
@@ -24,7 +26,12 @@ public class LoanViewModel
     [Required]
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    public DateOnly ReturnDate { get; set; }
+    public DateOnly? ReturnDate { get; set; }
+}
+
+public class LoanIndexViewModel
+{
+    public IEnumerable<LoanViewModel> Loans { get; set; }
 }
 
 public class MakeLoanViewModel

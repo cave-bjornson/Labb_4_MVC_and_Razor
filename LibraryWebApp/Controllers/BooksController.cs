@@ -12,10 +12,12 @@ namespace LibraryWebApp.Controllers;
 public class BooksController : AbpController
 {
     private readonly IBookAppService _service;
+    private readonly ILoanService _loanService;
 
-    public BooksController(IBookAppService service)
+    public BooksController(IBookAppService service, ILoanService loanService)
     {
         _service = service;
+        _loanService = loanService;
     }
 
     // GET
@@ -26,6 +28,11 @@ public class BooksController : AbpController
         {
             Books = ObjectMapper.Map<IEnumerable<BookDto>, IEnumerable<BookViewModel>>(books.Items),
         };
+
+        foreach (var bookViewModel in model.Books)
+        {
+            bookViewModel.OnLoan = _loanService.IsOnLoan(Guid.Parse(bookViewModel.BookId)).Result;
+        }
 
         return View(model);
     }

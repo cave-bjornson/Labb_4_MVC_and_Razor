@@ -1,7 +1,7 @@
 {
   "culture": "en",
   "texts": {
-    "Welcome_Title": "Welcome",
+    "Welcome_Title": "Welcome To Edugrade Library",
     "Welcome_Text": "This is a minimalist, single layer application startup template for the ABP Framework.",
     "Menu:Home": "Home",
     "Permission:Library": "Library",
@@ -12,6 +12,7 @@
     "Permission:Customers": "View Customers",
     "Permission:Customers.Create": "Create new Customers",
     "Permission:Customers.Edit": "Edit Customers",
-    "Permission:Customers.Delete": "Delete Customers"
+    "Permission:Customers.Delete": "Delete Customers",
+    "Permission:Loans": "View Loans"
   }
 }

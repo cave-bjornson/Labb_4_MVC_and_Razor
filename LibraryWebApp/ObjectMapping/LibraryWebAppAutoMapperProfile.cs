@@ -25,8 +25,25 @@ public class LibraryWebAppAutoMapperProfile : Profile
         CreateMap<BookViewModel, CreateUpdateBookDto>();
         CreateMap<CustomerDto, CustomerViewModel>();
         CreateMap<CustomerViewModel, CreateUpdateCustomerDto>();
+        CreateMap<CustomerDto, EditCustomerViewModel>();
         CreateMap<Loan, LoanDto>();
-        CreateMap<LoanDto, LoanViewModel>();
+        CreateMap<LoanDto, LoanViewModel>()
+            .ForMember(
+                destinationMember: model => model.LoanDate,
+                dto => dto.MapFrom(loanDto => DateOnly.FromDateTime(loanDto.LoanDate))
+            )
+            .ForMember(
+                destinationMember: model => model.DueDate,
+                dto => dto.MapFrom(loanDto => DateOnly.FromDateTime(loanDto.DueDate))
+            )
+            .ForMember(
+                destinationMember: model => model.ReturnDate,
+                dto =>
+                    dto.MapFrom<DateOnly?>(
+                        loanDto =>
+                            loanDto.ReturnDate != null ? DateOnly.FromDateTime(loanDto.ReturnDate.Value) : null
+                    )
+            );
         CreateMap<LoanCreateUpdateDto, Loan>();
     }
 }

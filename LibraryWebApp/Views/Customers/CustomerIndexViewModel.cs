@@ -48,3 +48,24 @@ public class CustomerViewModel
     [Required]
     public string UserName { get; set; }
 }
+
+public class EditCustomerViewModel
+{
+    [DynamicFormIgnore]
+    public IEnumerable<SelectListItem> CustomerUserNames { get; set; }
+    
+    [DynamicFormIgnore]
+    public string Id { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Name { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Surname { get; set; }
+
+    [Required]
+    [SelectItems(nameof(CustomerUserNames))]
+    public string UserName { get; set; }
+}

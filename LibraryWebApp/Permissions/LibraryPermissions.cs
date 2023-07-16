@@ -19,4 +19,9 @@ public static class LibraryPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+
+    public static class Loans
+    {
+        public const string Default = GroupName + ".Loans";
+    }
 }

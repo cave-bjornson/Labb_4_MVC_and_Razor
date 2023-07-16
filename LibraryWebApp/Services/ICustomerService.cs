@@ -5,9 +5,7 @@ using Volo.Abp.Application.Services;
 namespace LibraryWebApp.Services;
 
 public interface ICustomerService
-    : ICrudAppService<
-        CustomerDto,
-        Guid,
-        PagedAndSortedResultRequestDto,
-        CreateUpdateCustomerDto
-    > { }
+    : ICrudAppService<CustomerDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateCustomerDto>
+{
+    public Task<List<string>> GetCustomerUserNames();
+}

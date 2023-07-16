@@ -1,14 +1,24 @@
-﻿@model LibraryWebApp.Views.Customers.CustomerViewModel
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Card
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model LibraryWebApp.Views.Customers.EditCustomerViewModel
 
 @{
     ViewBag.Title = "Customer Details";
 }
 
+<div class="pe-0 pe-md-4">
+    <div class="mb-4">
+        <a abp-button="Secondary" asp-action="Index">Go Back</a>
+    </div>
+</div>
 <abp-card abp-border="Dark">
     <abp-card-header>@ViewBag.Title</abp-card-header>
     <abp-card-body>
         <abp-card-title>@Model.Name @Model.Surname</abp-card-title>
-        <abp-card-text>With supporting text below as a natural lead-in to additional content.</abp-card-text>
-        <a abp-button="Primary" asp-action="Index">Go Back</a>
+        <abp-dynamic-form asp-action="Details" abp-model="@Model" submit-button="true">
+
+        </abp-dynamic-form>
     </abp-card-body>
 </abp-card>

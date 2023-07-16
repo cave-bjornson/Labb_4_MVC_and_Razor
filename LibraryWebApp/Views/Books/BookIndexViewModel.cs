@@ -30,4 +30,7 @@ public class BookViewModel
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime PublishDate { get; set; } = DateTime.Today;
+    
+    [DynamicFormIgnore]
+    public bool OnLoan { get; set; }
 }

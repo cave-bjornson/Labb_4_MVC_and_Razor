@@ -1,4 +1,5 @@
-﻿using LibraryWebApp.Entities;
+﻿using System.Linq.Dynamic.Core;
+using LibraryWebApp.Entities;
 using LibraryWebApp.Permissions;
 using LibraryWebApp.Services.Dtos;
 using Volo.Abp.Application.Dtos;
@@ -26,5 +27,15 @@ public class CustomerService
         CreatePolicyName = LibraryPermissions.Customers.Create;
         UpdatePolicyName = LibraryPermissions.Customers.Edit;
         DeletePolicyName = LibraryPermissions.Customers.Delete;
+    }
+
+    /// <inheritdoc />
+    public async Task<List<string>> GetCustomerUserNames()
+    {
+        var queryable = await ReadOnlyRepository.GetQueryableAsync();
+
+        var query = queryable.Select(customer => customer.UserName);
+
+        return await AsyncExecuter.ToListAsync(query);
     }
 }

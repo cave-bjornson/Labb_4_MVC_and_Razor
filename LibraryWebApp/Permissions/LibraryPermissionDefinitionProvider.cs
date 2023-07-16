@@ -35,6 +35,11 @@ public class LibraryPermissionDefinitionProvider : PermissionDefinitionProvider
             LibraryPermissions.Customers.Delete,
             L("Permission:Customers.Delete")
         );
+
+        var loansPermission = libraryGroup.AddPermission(
+            LibraryPermissions.Loans.Default,
+            L("Permission:Loans")
+        );
     }
 
     private static LocalizableString L(string name)

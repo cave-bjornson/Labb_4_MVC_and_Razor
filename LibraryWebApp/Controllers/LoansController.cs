@@ -1,4 +1,5 @@
-﻿using LibraryWebApp.Services;
+﻿using System.Collections;
+using LibraryWebApp.Services;
 using LibraryWebApp.Services.Dtos;
 using LibraryWebApp.Views.Loans;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,12 @@ public class LoansController : AbpController
     public async Task<IActionResult> Index()
     {
         var loans = await _service.GetListWithNames();
+        var model = new LoanIndexViewModel
+        {
+            Loans = ObjectMapper.Map<IEnumerable<LoanDto>, IEnumerable<LoanViewModel>>(loans)
+        };
 
-        return View();
+        return View(model);
     }
 
     [HttpPost]
@@ -30,5 +35,13 @@ public class LoansController : AbpController
         await _service.MakeLoan(customerUserName, Guid.Parse(bookId));
 
         return RedirectToAction("Index", "Books");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ReturnLoan(string loanId)
+    {
+        await _service.ReturnLoan(Guid.Parse(loanId));
+
+        return RedirectToAction("Index", "Loans");
     }
 }
